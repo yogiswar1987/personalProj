@@ -128,14 +128,20 @@ input {
   width: 80%;
   height: 600px;
 }
-.ion-iphone:before{
+
+.ion-iphone:before {
   font-size: 16px;
 }
-.ion-key:before{
+
+.ion-key:before {
   font-size: 16px;
 }
-.scroll{height: 100%;}
-.slidetitle{
+
+.scroll {
+  height: 100%;
+}
+
+.slidetitle {
   color: white;
   text-align: center;
   padding-top: 10px;
