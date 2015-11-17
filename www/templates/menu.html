@@ -1,0 +1,44 @@
+<ion-side-menus>
+  <!-- Center content -->
+  <ion-nav-bar class="bar-positive nav-title-slide-ios7 has-tabs-top">
+    <ion-nav-buttons side="left">
+      <button class="button button-icon icon ion-navicon" drawer-toggle animate="false" style="margin-left: -22px">
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-title>
+      Ionic App
+    </ion-nav-title>
+  </ion-nav-bar>
+
+  <ion-side-menu-content>
+    <ion-view>
+      <ion-content class="has-header">
+      </ion-content>
+    </ion-view>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <drawer side="left" style="background-color: white">
+    <ion-header-bar class="bar-stable">
+      <h1 class="title">Quick Ride</h1>
+    </ion-header-bar>
+    <ion-content>
+      <ion-list>
+        <ion-item menu-close href="#/auth/login">
+          Login
+        </ion-item>
+        <ion-item menu-close href="#/app/search">
+          Search
+        </ion-item>
+        <ion-item menu-close href="#/app/browse">
+          Browse
+        </ion-item>
+        <ion-item menu-close href="#/app/playlists">
+          Playlists
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </drawer>
+
+
+</ion-side-menus>
