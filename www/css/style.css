@@ -2,6 +2,7 @@
 @media (min-width: 767px) {
   drawer {
     -webkit-transform: translate3d(0%, 0, 0) !important;
+
   }
 
   .bar-header button.ion-navicon {
