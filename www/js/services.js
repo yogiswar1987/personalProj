@@ -1,12 +1,19 @@
 angular.module('quickRide')
-  .factory('SignUpService',['$http',function ($http) {
+  .factory('AuthenticationService', ['$http', function ($http) {
+    var phone;
     return {
+      getPhone: function(){
+        if(!phone){
+          phone = sessionStorage.getItem("phone");
+        }
+        return phone;
+      },
       signUp: function (signUpData) {
         signUpData.gender = "M";
         var urlOpts1 = {
           method: 'POST',
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          url: BASE_URL+'QRUser',
+          url: BASE_URL + 'QRUser',
           transformRequest: function (obj) {
             var str = [];
             for (var p in obj)
@@ -15,33 +22,36 @@ angular.module('quickRide')
           },
           data: signUpData
         };
+        return $http(urlOpts1).success(function(data){
+          sessionStorage.setItem("phone",signUpData.phone);
+        });
+      },
+      checkReferralCode: function (referralCode) {
+        var urlOpts1 = {
+          method: 'GET',
+          url: BASE_URL + 'QRUser/checkReferralCode?referralCode=' + referralCode
+        };
         return $http(urlOpts1);
       },
-      checkReferralCode: function(referralCode){
+      login: function (user) {
         var urlOpts1 = {
           method: 'GET',
-          url: BASE_URL+'QRUser/checkReferralCode?referralCode='+referralCode
+          url: BASE_URL +'QRUser/login?userId=' + user.phone + '&pwd=' + user.pwd
         };
-        return $http(urlOpts1);
+        return $http(urlOpts1).error(function(data){
+          sessionStorage.setItem("phone",user.phone);
+        });
       }
     }
-  }]).factory('AccountService',[function(){
+  }]).factory('AccountService', [function () {
     return {
       activateAccount: function (phone, activationCode) {
-        var deferred = $q.defer();
         var urlOpts1 = {
           method: 'GET',
-          url: 'dishaapiserver/rest/user/activateAccount?userId=' + phone + '&activationCode=' + activationCode,
-          transformResponse: specialTransform
+          url: 'QRUser/activateAccount?userId=' + phone + '&activationCode=' + activationCode
         };
-        $http(urlOpts1)
-          .success(function (data, status, headers, config) {
-            deferred.resolve(data);
-          }).
-          error(function (data, status, headers, config) {
-            deferred.reject(data);
-          });
-        return deferred.promise;
+       return $http(urlOpts1);
+
       }
     }
   }]);
