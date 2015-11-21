@@ -52,7 +52,7 @@ angular.module('quickRide')
     ];
   })
 
-  .controller('SignUpCtrl', function ($scope, $ionicPopup,SignUpService,$location) {
+  .controller('SignUpCtrl', function ($scope, $ionicPopup,AuthenticationService,$location) {
 
     $scope.signUpData ={};
     // Triggered on a button click, or some other target
@@ -72,7 +72,7 @@ angular.module('quickRide')
               if (!$scope.signUpData.promocode) {
                 e.preventDefault();
               } else {
-                SignUpService.checkReferralCode($scope.signUpData.promoode).success(function(data){
+                AuthenticationService.checkReferralCode($scope.signUpData.promoode).success(function(data){
                   var alertPopup = $ionicPopup.alert({
                     template: data
                   });
@@ -99,7 +99,7 @@ angular.module('quickRide')
     };
 
     $scope.signUp = function(){
-      SignUpService.signUp($scope.signUpData).success(function(data){
+      AuthenticationService.signUp($scope.signUpData).success(function(data){
         $location.path('auth/accountActivation')
         console.log(data);
       }).error(function(error){
@@ -110,27 +110,23 @@ angular.module('quickRide')
 
   .controller('PlaylistCtrl', function ($scope, $stateParams) {
   }).controller('LandingCtrl', function ($scope, $stateParams) {
-  }).controller('LoginCtrl', ['$scope', '$location', function ($scope, $location) {
-
-    $scope.authenticate = function (loginForm) {
-
-      $scope.errorMessage = "";
-      if ($scope.isFormValid(loginForm)) {
-        /*authenticationService.authenticate(loginForm.emailId.$modelValue, loginForm.password.$modelValue).success(function (response) {
-         $location.path('/app/home');
-         }).error(function (response) {
-         console.log('authentication failure' + response);
-         vm.errorMessage = response.userDisplayErrorStr;
-         });*/
+  }).controller('LoginCtrl', ['$scope', '$location','AuthenticationService', function ($scope, $location,AuthenticationService) {
+      $scope.user = {};
+      $scope.login = function () {
+        AuthenticationService.login($scope.user).success(function (data) {
+          console.log(data);
+          $location.path("/app/browse");
+        }).error(function (error) {
+          console.log(error);
+        });
       }
-
-      // Quirk to remove .sidebar-visible from body
-      // angular.element('body').removeClass('sidebar-visible');
-    }
-  }]).controller('AccountActivationCtrl',['$scope','AccountService',function($scope,AccountService){
+  }]).controller('AccountActivationCtrl',['$scope','AccountService','AuthenticationService','$location',function($scope,AccountService,AuthenticationService,$location){
 
     $scope.activateAccount = function(){
-      AccountService.activateAccount($scope.activationCode).success(function(data){
+      if(!AuthenticationService.getPhone()){
+        $location('/auth/login')
+      }
+      AccountService.activateAccount(AuthenticationService.getPhone(),$scope.activationCode).success(function(data){
         console.log(data);
       }).error(function(error){
         console.log(error);
