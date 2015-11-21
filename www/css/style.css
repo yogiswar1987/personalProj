@@ -147,6 +147,11 @@ input {
   padding-top: 10px;
 }*/
 
+a {
+  text-decoration: none;
+}
+
+
 /* Styles go here */
 
 .toggle-text > .track {

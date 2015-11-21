@@ -1,25 +1,28 @@
-<ion-content>
-  <div class="login">
-    <form name="loginForm">
-      <div>
-        <label class="icon ion-iphone larger" style="padding-left: 5px">Phone</label>
-        <input type="tel"/>
+<form ua-login>
+  <ion-view title="Login">
+    <ion-content>
+      <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label icon ion-android-phone-portrait larger">Phone</span>
+          <input type="text" placeholder="Phone">
+        </label>
+
+        <label class="item item-input item-floating-label">
+          <span class="input-label icon ion-key larger">Password</span>
+          <input type="password" placeholder="Password">
+        </label>
+
       </div>
-      <div>
-        <label class="ion-key" style="padding-left: 5px">Password</label>
-        <input type="password"/>
-      </div>
-      <div>
-        <div style="width: 100%;text-align: center;padding-top: 20px;">
-          <button class="button button-login" style="width: 100%;" ng-click="">Login</button>
-        </div>
-        <div style="padding-top: 20px;text-align: center">
-          <a href="#">Forgot Password?</a>
-        </div>
-        <div style="width: 100%;text-align: center;padding-top: 20px">
-          <button class="button button-signup" style="width: 100%;" type="submit">Sign Up</button>
-        </div>
-      </div>
-    </form>
+
+      <button class="button button-block button-energized" ng-click="login()">Login</button>
+
+      <div><a href="#/auth/forgotPassword">Forgot Password?</a></div>
+
+      <a href="#/auth/signUp"><button class="button button-block button-balanced">SignUp</button></a>
+
+    </ion-content>
+  </ion-view>
+  <div class="bar bar-footer bar-assertive" ng-show="error">
+    <div class="title">{{ error.message }}</div>
   </div>
-</ion-content>
+</form>

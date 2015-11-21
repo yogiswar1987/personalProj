@@ -48,6 +48,10 @@ angular.module('quickRide', ['ionic', 'ionic.contrib.drawer'])
         templateUrl: "templates/signUp.html",
         controller: "SignUpCtrl"
       })
+      .state('auth.forgotPassword', {
+        url: "/forgotPassword",
+        templateUrl: "templates/forgotPassword.html"
+      })
       .state('app', {
         url: '/app',
         abstract: true,
