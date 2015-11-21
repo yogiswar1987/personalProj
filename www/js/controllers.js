@@ -52,7 +52,7 @@ angular.module('quickRide')
     ];
   })
 
-  .controller('SignUpCtrl', function ($scope, $ionicPopup,SignUpService) {
+  .controller('SignUpCtrl', function ($scope, $ionicPopup,SignUpService,$location) {
 
     $scope.signUpData ={};
     // Triggered on a button click, or some other target
@@ -100,6 +100,7 @@ angular.module('quickRide')
 
     $scope.signUp = function(){
       SignUpService.signUp($scope.signUpData).success(function(data){
+        $location.path('auth/accountActivation')
         console.log(data);
       }).error(function(error){
         console.log(error);

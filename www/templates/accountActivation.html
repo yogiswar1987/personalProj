@@ -1,7 +1,20 @@
 <form ua-login>
   <ion-view title="Activate Account">
     <ion-content>
-      Activate account
+      <div style="padding-top:20px;padding-bottom: 20px;text-align: center"><img src="/img/quickride.png"
+                                                                                 style="height:80px;"></div>
+        <div style="text-align: center">
+        <span style="text-align: center"> Thank you for registering with Quick Ride!</span> <br>
+        <span style="text-align: center"> We sent activation code through SMS       </span>
+        </div>
+
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Enter activation code</span>
+        <input type="text">
+      </label>
+
+      <button class="button button-block button-balanced">Activate</button>
+      <a href="#">Resend activation code</a>
     </ion-content>
   </ion-view>
   <div class="bar bar-footer bar-assertive" ng-show="error">
