@@ -72,7 +72,21 @@ angular.module('quickRide')
               if (!$scope.signUpData.promocode) {
                 e.preventDefault();
               } else {
-                return $scope.signUpData.promocode;
+                SignUpService.checkReferralCode($scope.signUpData.promoode).success(function(data){
+                  var alertPopup = $ionicPopup.alert({
+                    template: data
+                  });
+                  alertPopup.then(function(res) {
+                    console.log('promo code alert closed');
+                  });
+                }).error(function(error){
+                  var alertPopup = $ionicPopup.alert({
+                    template: error.resultData.userMsg
+                  });
+                  alertPopup.then(function(res) {
+                    console.log(error);
+                  });
+                });
               }
             }
           },
@@ -112,5 +126,14 @@ angular.module('quickRide')
       // Quirk to remove .sidebar-visible from body
       // angular.element('body').removeClass('sidebar-visible');
     }
-  }])
+  }]).controller('AccountActivationCtrl',['$scope','AccountService',function($scope,AccountService){
+
+    $scope.activateAccount = function(){
+      AccountService.activateAccount($scope.activationCode).success(function(data){
+        console.log(data);
+      }).error(function(error){
+        console.log(error);
+      });
+    }
+  }]);
 
