@@ -33,7 +33,7 @@ angular.module('quickRide', ['ionic', 'ionic.contrib.drawer'])
         url: "/auth",
         templateUrl: "templates/auth.html"
       })
-      .state('auth.landing', {
+      .state('landing', {
         url: "/landing",
         templateUrl: "templates/landing.html",
         controller: "LandingCtrl"
@@ -101,5 +101,5 @@ angular.module('quickRide', ['ionic', 'ionic.contrib.drawer'])
         }
       });
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/auth/landing');
+    $urlRouterProvider.otherwise('/landing');
   });
