@@ -52,15 +52,16 @@ angular.module('quickRide')
     ];
   })
 
-  .controller('SignUpCtrl', function ($scope, $ionicPopup) {
+  .controller('SignUpCtrl', function ($scope, $ionicPopup,SignUpService) {
 
+    $scope.signUpData ={};
     // Triggered on a button click, or some other target
     $scope.showPopup = function () {
       $scope.data = {}
 
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
-        template: '<input type="text" ng-model="promocode">',
+        template: '<input type="text" ng-model="signUpData.promocode">',
         title: 'Apply your promo code',
         scope: $scope,
         buttons: [
@@ -68,10 +69,10 @@ angular.module('quickRide')
             text: '<b>Apply</b>',
             type: 'button-balanced',
             onTap: function (e) {
-              if (!$scope.promocode) {
+              if (!$scope.signUpData.promocode) {
                 e.preventDefault();
               } else {
-                return $scope.promocode;
+                return $scope.signUpData.promocode;
               }
             }
           },
@@ -81,11 +82,15 @@ angular.module('quickRide')
       myPopup.then(function (res) {
         console.log('Tapped!', res);
       });
-      $timeout(function () {
-        myPopup.close(); //close the popup after 3 seconds for some reason
-      }, 3000);
     };
 
+    $scope.signUp = function(){
+      SignUpService.signUp($scope.signUpData).success(function(data){
+        console.log(data);
+      }).error(function(error){
+        console.log(error);
+      });
+    }
   })
 
   .controller('PlaylistCtrl', function ($scope, $stateParams) {

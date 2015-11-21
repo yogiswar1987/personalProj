@@ -23,6 +23,7 @@ angular.module('quickRide', ['ionic', 'ionic.contrib.drawer'])
   })
 
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+    window.BASE_URL = "http://testrm.getquickride.com:8080/dishaapiserver/rest/";
     $ionicConfigProvider.views.transition("android");
     $stateProvider
 
