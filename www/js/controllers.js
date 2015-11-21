@@ -1,6 +1,6 @@
 angular.module('quickRide')
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
+  .controller('AppCtrl', function ($rootScope,$scope, $ionicModal, $timeout) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -9,6 +9,7 @@ angular.module('quickRide')
     //$scope.$on('$ionicView.enter', function(e) {
     //});
 
+    $rootScope.showNavBar = false;
     // Form data for the login modal
     $scope.loginData = {};
 
@@ -52,8 +53,9 @@ angular.module('quickRide')
     ];
   })
 
-  .controller('SignUpCtrl', function ($scope, $ionicPopup,AuthenticationService,$location) {
+  .controller('SignUpCtrl', function ($rootScope,$scope, $ionicPopup,AuthenticationService,$location) {
 
+    $rootScope.showNavBar = true;
     $scope.signUpData ={};
     // Triggered on a button click, or some other target
     $scope.showPopup = function () {
