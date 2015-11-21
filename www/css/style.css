@@ -1,5 +1,5 @@
 /* Empty. Add your own CSS if you like */
-@media (min-width: 767px) {
+/*@media (min-width: 767px) {
   drawer {
     -webkit-transform: translate3d(0%, 0, 0) !important;
 
@@ -145,4 +145,49 @@ input {
   color: white;
   text-align: center;
   padding-top: 10px;
+}*/
+
+/* Styles go here */
+
+.toggle-text > .track {
+
+  width: auto;
+  padding-left: 25px;
+  padding-right: 25px;
+
 }
+
+.toggle-text .handle {
+  left: 7px;
+}
+
+.toggle-text .handle-text {
+  font-size: 24px;
+  color: white;
+
+  position: absolute;
+  top: -4px;
+
+}
+
+.toggle-text .handle-text-false {
+  left: 36px;
+}
+
+.toggle-text input:checked + .track .handle {
+  -webkit-transform: none;
+  -moz-transform: none;
+  transform: none;
+  left: calc(100% - 34px);
+
+  /*  -webkit-transform: translate3d(0, 0,0);*/
+}
+
+.track-text {
+  line-height: 26px;
+  /* color: white;*/
+  font-size: 24px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+

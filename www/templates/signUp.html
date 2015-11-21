@@ -1,12 +1,37 @@
-<ion-content>
-  <div class="login">
-    <form name="signUpForm">
-      <div>
-        <label class="icon ion-iphone larger" style="padding-left: 5px">Phone</label>
-        <input type="tel"/>
+<form ua-signup>
+  <ion-view title="Sign Up">
+    <ion-content>
+      <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label icon ion-android-phone-portrait larger">Phone</span>
+          <input type="text" placeholder="Phone">
+        </label>
+
+        <label class="item item-input item-floating-label">
+          <span class="input-label icon ion-key larger">Password</span>
+          <input type="text" placeholder="Password">
+        </label>
+
+        <label class="item item-input item-floating-label">
+          <span class="input-label icon ion-person larger">Name</span>
+          <input type="text" placeholder="Name">
+        </label>
+
+        <ion-toggle ng-model="toggle1" ng-checked="true">
+          Gender: {{ toggle1 }}
+        </ion-toggle>
+
+
       </div>
 
+      <div ng-click="showPopup()"><a>Have a promo code?</a></div>
 
-    </form>
+      <button class="button button-block button-balanced" ng-click="login()">Sign Up</button>
+
+      <span>By Sign Up, I agree to <a href="terms.html">Quick Ride Terms</a></span>
+    </ion-content>
+  </ion-view>
+  <div class="bar bar-footer bar-assertive" ng-show="error">
+    <div class="title">{{ error.message }}</div>
   </div>
-</ion-content>
+</form>

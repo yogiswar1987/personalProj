@@ -52,6 +52,42 @@ angular.module('quickRide')
     ];
   })
 
+  .controller('SignUpCtrl', function ($scope, $ionicPopup) {
+
+    // Triggered on a button click, or some other target
+    $scope.showPopup = function () {
+      $scope.data = {}
+
+      // An elaborate, custom popup
+      var myPopup = $ionicPopup.show({
+        template: '<input type="text" ng-model="promocode">',
+        title: 'Apply your promo code',
+        scope: $scope,
+        buttons: [
+          {
+            text: '<b>Apply</b>',
+            type: 'button-balanced',
+            onTap: function (e) {
+              if (!$scope.promocode) {
+                e.preventDefault();
+              } else {
+                return $scope.promocode;
+              }
+            }
+          },
+          {text: 'Cancel'}
+        ]
+      });
+      myPopup.then(function (res) {
+        console.log('Tapped!', res);
+      });
+      $timeout(function () {
+        myPopup.close(); //close the popup after 3 seconds for some reason
+      }, 3000);
+    };
+
+  })
+
   .controller('PlaylistCtrl', function ($scope, $stateParams) {
   }).controller('LandingCtrl', function ($scope, $stateParams) {
   }).controller('LoginCtrl', ['$scope', '$location', function ($scope, $location) {
@@ -71,4 +107,5 @@ angular.module('quickRide')
       // Quirk to remove .sidebar-visible from body
       // angular.element('body').removeClass('sidebar-visible');
     }
-  }]);
+  }])
+
