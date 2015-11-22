@@ -1,16 +1,16 @@
 <form ua-login>
   <ion-view title="Activate Account">
     <ion-content>
-      <div style="padding-top:20px;padding-bottom: 20px;text-align: center"><img src="/img/quickride.png"
-                                                                                 style="height:80px;"></div>
-        <div style="text-align: center">
+      <div style="padding-top:20px;padding-bottom: 20px;text-align: center">
+        <img src="/img/quickride.png" style="height:80px;"></div>
+      <div style="text-align: center">
         <span style="text-align: center"> Thank you for registering with Quick Ride!</span> <br>
         <span style="text-align: center"> We sent activation code through SMS       </span>
-        </div>
+      </div>
 
       <label class="item item-input item-floating-label">
         <span class="input-label">Activation code</span>
-        <input type="text" placeholder="Activation code" ng-model="activationCode">
+        <input type="text" placeholder="Activation code" ng-model="activationData.activationCode">
       </label>
 
       <button class="button button-block button-balanced" ng-click="activateAccount()">Activate</button>

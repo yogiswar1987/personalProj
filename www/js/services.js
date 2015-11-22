@@ -38,7 +38,9 @@ angular.module('quickRide')
           method: 'GET',
           url: BASE_URL +'QRUser/login?userId=' + user.phone + '&pwd=' + user.pwd
         };
-        return $http(urlOpts1).error(function(data){
+        return $http(urlOpts1).success(function(data){
+          sessionStorage.setItem("phone",user.phone);
+        }).error(function(data){
           sessionStorage.setItem("phone",user.phone);
         });
       }

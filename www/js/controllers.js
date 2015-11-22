@@ -102,7 +102,7 @@ angular.module('quickRide')
 
     $scope.signUp = function(){
       AuthenticationService.signUp($scope.signUpData).success(function(data){
-        $location.path('auth/accountActivation')
+        $location.path('auth/accountActivation');
         console.log(data);
       }).error(function(error){
         console.log(error);
@@ -152,17 +152,20 @@ angular.module('quickRide')
           console.log(data);
           $location.path("/app/browse");
         }).error(function (error) {
+          if(error.errorCode = 1007){
+            $location.path('auth/accountActivation')
+          }
           console.log(error);
         });
       }
   }]).controller('AccountActivationCtrl',['$scope','AccountService','AuthenticationService','$location',function($scope,AccountService,AuthenticationService,$location){
 
-    $scope.activationCode = "";
+    $scope.activationData = {};
     $scope.activateAccount = function(){
       if(!AuthenticationService.getPhone()){
-        $location('/auth/login')
+        $location.path('/auth/login');
       }
-      AccountService.activateAccount(AuthenticationService.getPhone(),$scope.activationCode).success(function(data){
+      AccountService.activateAccount(AuthenticationService.getPhone(),$scope.activationData.activationCode).success(function(data){
         console.log(data);
         $location.path("/app/browse");
       }).error(function(error){
