@@ -51,7 +51,8 @@ angular.module('quickRide', ['ionic', 'ionic.contrib.drawer','ngOpenFB'])
       })
       .state('auth.forgotPassword', {
         url: "/forgotPassword",
-        templateUrl: "templates/forgotPassword.html"
+        templateUrl: "templates/forgotPassword.html",
+        controller: "ForgotPasswordCtrl"
       })
       .state('auth.accountActivation', {
         url: "/accountActivation",

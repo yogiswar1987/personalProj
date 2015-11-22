@@ -152,7 +152,7 @@ angular.module('quickRide')
           console.log(data);
           $location.path("/app/browse");
         }).error(function (error) {
-          if(error.errorCode = 1007){
+          if(error.errorCode === 1007){
             $location.path('auth/accountActivation')
           }
           console.log(error);
@@ -172,5 +172,15 @@ angular.module('quickRide')
         console.log(error);
       });
     }
+  }]).controller('ForgotPasswordCtrl',['$scope','$location','AuthenticationService',function($scope,$location,AuthenticationService){
+$scope.user ={};
+    $scope.resetPassword = function(){
+      AuthenticationService.resetPassword($scope.user).success(function(data){
+        console.log(data);
+        $location.path("/auth/login");
+      }).error(function(error){
+        console.log(error);
+      });
+    };
   }]);
 

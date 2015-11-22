@@ -43,6 +43,13 @@ angular.module('quickRide')
         }).error(function(data){
           sessionStorage.setItem("phone",user.phone);
         });
+      },
+      resetPassword:function (user){
+        var urlOpts1 = {
+          method: 'GET',
+          url: BASE_URL +'QRUser/password?phone=' + user.phone
+        };
+        return $http(urlOpts1);
       }
     }
   }]).factory('AccountService', ['$http',function ($http) {
