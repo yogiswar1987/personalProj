@@ -12,7 +12,12 @@
           <span class="input-label icon ion-key larger">Password</span>
           <input type="password" placeholder="Password" ng-model="user.pwd">
         </label>
-
+        <div class="item item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox" ng-model="user.rememberme">
+          </label>
+          Remember me
+        </div>
       </div>
 
       <button class="button button-block button-energized" ng-click="login()">Login</button>

@@ -1,47 +1,13 @@
 angular.module('quickRide')
 
-  .controller('AppCtrl', function ($rootScope,$scope, $ionicModal, $timeout) {
-
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
-
+  .controller('HomeCtrl', function ($rootScope, $scope, $ionicModal, $timeout, $location, AuthenticationService) {
     $rootScope.showNavBar = false;
-    // Form data for the login modal
-    $scope.loginData = {};
-
-    // Create the login modal that we will use later
-    $ionicModal.fromTemplateUrl('templates/login.html', {
-      scope: $scope
-    }).then(function (modal) {
-      $scope.modal = modal;
-    });
-
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function () {
-      $scope.modal.hide();
+    $scope.logout = function () {
+      AuthenticationService.logout();
+      $location.path('#/auth/landing');
     };
 
-    // Open the login modal
-    $scope.login = function () {
-      $scope.modal.show();
-    };
-
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function () {
-      console.log('Doing login', $scope.loginData);
-
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
-      $timeout(function () {
-        $scope.closeLogin();
-      }, 1000);
-    };
   })
-
   .controller('PlaylistsCtrl', function ($scope) {
     $scope.playlists = [
       {title: 'Reggae', id: 1},
@@ -53,10 +19,10 @@ angular.module('quickRide')
     ];
   })
 
-  .controller('SignUpCtrl', function ($rootScope,$scope, $ionicPopup,AuthenticationService,$location) {
+  .controller('SignUpCtrl', function ($rootScope, $scope, $ionicPopup, AuthenticationService, $location) {
 
     $rootScope.showNavBar = true;
-    $scope.signUpData ={};
+    $scope.signUpData = {};
     // Triggered on a button click, or some other target
     $scope.showPopup = function () {
       $scope.data = {}
@@ -74,18 +40,18 @@ angular.module('quickRide')
               if (!$scope.signUpData.promocode) {
                 e.preventDefault();
               } else {
-                AuthenticationService.checkReferralCode($scope.signUpData.promoode).success(function(data){
+                AuthenticationService.checkReferralCode($scope.signUpData.promoode).success(function (data) {
                   var alertPopup = $ionicPopup.alert({
                     template: data
                   });
-                  alertPopup.then(function(res) {
+                  alertPopup.then(function (res) {
                     console.log('promo code alert closed');
                   });
-                }).error(function(error){
+                }).error(function (error) {
                   var alertPopup = $ionicPopup.alert({
                     template: error.resultData.userMsg
                   });
-                  alertPopup.then(function(res) {
+                  alertPopup.then(function (res) {
                     console.log(error);
                   });
                 });
@@ -100,17 +66,30 @@ angular.module('quickRide')
       });
     };
 
-    $scope.signUp = function(){
-      AuthenticationService.signUp($scope.signUpData).success(function(data){
+    $scope.signUp = function () {
+      AuthenticationService.signUp($scope.signUpData).success(function (data) {
         $location.path('auth/accountActivation');
         console.log(data);
-      }).error(function(error){
+      }).error(function (error) {
         console.log(error);
       });
     }
   })
   .controller('PlaylistCtrl', function ($scope, $stateParams) {
-  }).controller('LandingCtrl', function ($scope, $ionicModal, $timeout, ngFB) {
+  }).controller('LandingCtrl', function ($scope, $ionicModal, $timeout, ngFB, AuthenticationService, $location, $rootScope) {
+    if (AuthenticationService.isSessionValid()) {
+      $location.url('app/browse');
+    }
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+      var p = $location.path();
+      if (p.indexOf('auth') == -1 && !AuthenticationService.isSessionValid()) {
+        $location.path('#/auth/login');
+        $location.replace();
+      }
+    });
+
+
     $scope.fbLogin = function () {
       ngFB.login({scope: 'email'}).then(
         function (response) {
@@ -127,16 +106,17 @@ angular.module('quickRide')
               });
             ngFB.api({
               path: '/me/picture',
-            params: {
-              type: 'normal'
-            }
+              params: {
+                type: 'normal'
+              }
             }).then(
               function (user) {
                 $scope.picture = user;
               },
               function (error) {
                 alert('Facebook error: ' + error.error_description);
-              });;
+              });
+            ;
             console.log('Facebook login succeeded');
           } else {
             alert('Facebook login failed');
@@ -144,50 +124,50 @@ angular.module('quickRide')
         });
     };
 
-  }).controller('LoginCtrl', ['$scope', '$location','AuthenticationService', function ($scope, $location,AuthenticationService) {
-      $scope.user = {};
-      $scope.login = function () {
-        AuthenticationService.login($scope.user).success(function (data) {
-          console.log(data);
-          $location.path("/app/browse");
-        }).error(function (error) {
-          if(error.errorCode === 1007){
-            $location.path('auth/accountActivation')
-          }
-          console.log(error);
-        });
-      }
-  }]).controller('AccountActivationCtrl',['$scope','AccountService','AuthenticationService','$location',function($scope,AccountService,AuthenticationService,$location){
-
-    $scope.activationData = {};
-    $scope.activateAccount = function(){
-      if(!AuthenticationService.getPhone()){
-        $location.path('/auth/login');
-      }
-      AccountService.activateAccount(AuthenticationService.getPhone(),$scope.activationData.activationCode).success(function(data){
+  }).controller('LoginCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
+    $scope.user = {};
+    $scope.login = function () {
+      AuthenticationService.login($scope.user).success(function (data) {
         console.log(data);
         $location.path("/app/browse");
-      }).error(function(error){
+      }).error(function (error) {
+        if (error.errorCode === 1007) {
+          $location.path('auth/accountActivation')
+        }
         console.log(error);
       });
     }
-  }]).controller('ForgotPasswordCtrl',['$scope','$location','AuthenticationService',function($scope,$location,AuthenticationService){
-$scope.user ={};
-    $scope.resetPassword = function(){
-      AuthenticationService.resetPassword($scope.user).success(function(data){
+  }]).controller('AccountActivationCtrl', ['$scope', 'AccountService', 'AuthenticationService', '$location', function ($scope, AccountService, AuthenticationService, $location) {
+
+    $scope.activationData = {};
+    $scope.activateAccount = function () {
+      if (!AuthenticationService.getPhone()) {
+        $location.path('/auth/login');
+      }
+      AccountService.activateAccount(AuthenticationService.getPhone(), $scope.activationData.activationCode).success(function (data) {
+        console.log(data);
+        $location.path("/app/browse");
+      }).error(function (error) {
+        console.log(error);
+      });
+    }
+  }]).controller('ForgotPasswordCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
+    $scope.user = {};
+    $scope.resetPassword = function () {
+      AuthenticationService.resetPassword($scope.user).success(function (data) {
         console.log(data);
         $location.path("/auth/login");
-      }).error(function(error){
+      }).error(function (error) {
         console.log(error);
       });
     };
-  }]).controller('ChangePasswordCtrl',['$scope','$location','AuthenticationService',function($scope,$location,AuthenticationService) {
-    $scope.user ={};
-    $scope.resetPassword = function(){
-      AuthenticationService.changePassword(AuthenticationService.getPhone(),$scope.user,newPassword,$scope.user,oldPassword).success(function(data){
+  }]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
+    $scope.user = {};
+    $scope.resetPassword = function () {
+      AuthenticationService.changePassword(AuthenticationService.getPhone(), $scope.user, newPassword, $scope.user, oldPassword).success(function (data) {
         console.log(data);
         $location.path("/auth/login");
-      }).error(function(error){
+      }).error(function (error) {
         console.log(error);
       });
     };

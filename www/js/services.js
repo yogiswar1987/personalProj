@@ -2,8 +2,8 @@ angular.module('quickRide')
   .factory('AuthenticationService', ['$http', function ($http) {
     var phone;
     return {
-      getPhone: function(){
-        if(!phone){
+      getPhone: function () {
+        if (!phone) {
           phone = sessionStorage.getItem("phone");
         }
         return phone;
@@ -22,8 +22,8 @@ angular.module('quickRide')
           },
           data: signUpData
         };
-        return $http(urlOpts).success(function(data){
-          sessionStorage.setItem("phone",signUpData.phone);
+        return $http(urlOpts).success(function (data) {
+          sessionStorage.setItem("phone", signUpData.phone);
         });
       },
       checkReferralCode: function (referralCode) {
@@ -36,36 +36,48 @@ angular.module('quickRide')
       login: function (user) {
         var urlOpts = {
           method: 'GET',
-          url: BASE_URL +'QRUser/login?userId=' + user.phone + '&pwd=' + user.pwd
+          url: BASE_URL + 'QRUser/login?userId=' + user.phone + '&pwd=' + user.pwd
         };
-        return $http(urlOpts).success(function(data){
-          sessionStorage.setItem("phone",user.phone);
-        }).error(function(data){
-          sessionStorage.setItem("phone",user.phone);
+        return $http(urlOpts).success(function (data) {
+          if(user.rememberme) {
+            localStorage.setItem("phone", user.phone);
+          }
+          sessionStorage.setItem("phone", user.phone);
+        }).error(function (data) {
+          sessionStorage.setItem("phone", user.phone);
         });
       },
-      resetPassword:function (user){
+      resetPassword: function (user) {
         var urlOpts = {
           method: 'GET',
-          url: BASE_URL +'QRUser/password?phone=' + user.phone
+          url: BASE_URL + 'QRUser/password?phone=' + user.phone
         };
         return $http(urlOpts);
+      },
+      isSessionValid: function () {
+        var phone = localStorage.getItem("phone") || sessionStorage.setItem("phone", phone);
+        sessionStorage.setItem("phone", phone);
+        return phone ? true : false;
+      },
+      logout: function () {
+        localStorage.removeItem("phone");
+        sessionStorage.removeItem("phone");
       }
     }
-  }]).factory('AccountService', ['$http',function ($http) {
+  }]).factory('AccountService', ['$http', function ($http) {
     return {
       activateAccount: function (phone, activationCode) {
         var urlOpts = {
           method: 'GET',
-          url: BASE_URL+'QRUser/activateAccount?userId=' + phone + '&activationCode=' + activationCode
+          url: BASE_URL + 'QRUser/activateAccount?userId=' + phone + '&activationCode=' + activationCode
         };
-       return $http(urlOpts);
+        return $http(urlOpts);
 
       },
-      changePassword:function (phone, oldPassword,newPassword) {
+      changePassword: function (phone, oldPassword, newPassword) {
         var urlOpts = {
           method: 'GET',
-          url: BASE_URL+'QRUser/password?phone=' + phone + '&old_pwd='+oldPassword+'&new_pwd=' + newPassword
+          url: BASE_URL + 'QRUser/password?phone=' + phone + '&old_pwd=' + oldPassword + '&new_pwd=' + newPassword
         };
         return $http(urlOpts);
 
