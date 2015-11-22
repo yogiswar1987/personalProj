@@ -109,7 +109,6 @@ angular.module('quickRide')
       });
     }
   })
-
   .controller('PlaylistCtrl', function ($scope, $stateParams) {
   }).controller('LandingCtrl', function ($scope, $ionicModal, $timeout, ngFB) {
     $scope.fbLogin = function () {
@@ -176,6 +175,16 @@ angular.module('quickRide')
 $scope.user ={};
     $scope.resetPassword = function(){
       AuthenticationService.resetPassword($scope.user).success(function(data){
+        console.log(data);
+        $location.path("/auth/login");
+      }).error(function(error){
+        console.log(error);
+      });
+    };
+  }]).controller('ChangePasswordCtrl',['$scope','$location','AuthenticationService',function($scope,$location,AuthenticationService) {
+    $scope.user ={};
+    $scope.resetPassword = function(){
+      AuthenticationService.changePassword(AuthenticationService.getPhone(),$scope.user,newPassword,$scope.user,oldPassword).success(function(data){
         console.log(data);
         $location.path("/auth/login");
       }).error(function(error){

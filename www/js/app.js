@@ -92,7 +92,15 @@ angular.module('quickRide', ['ionic', 'ionic.contrib.drawer','ngOpenFB'])
           }
         }
       })
-
+      .state('app.changePassword', {
+        url: '/changePassword',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/changePassword.html',
+            controller: 'ChangePasswordCtrl'
+          }
+        }
+      })
       .state('app.single', {
         url: '/playlists/:playlistId',
         views: {
