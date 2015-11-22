@@ -43,12 +43,12 @@ angular.module('quickRide')
         });
       }
     }
-  }]).factory('AccountService', [function () {
+  }]).factory('AccountService', ['$http',function ($http) {
     return {
       activateAccount: function (phone, activationCode) {
         var urlOpts1 = {
           method: 'GET',
-          url: 'QRUser/activateAccount?userId=' + phone + '&activationCode=' + activationCode
+          url: BASE_URL+'QRUser/activateAccount?userId=' + phone + '&activationCode=' + activationCode
         };
        return $http(urlOpts1);
 

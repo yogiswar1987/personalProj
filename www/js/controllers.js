@@ -111,7 +111,40 @@ angular.module('quickRide')
   })
 
   .controller('PlaylistCtrl', function ($scope, $stateParams) {
-  }).controller('LandingCtrl', function ($scope, $stateParams) {
+  }).controller('LandingCtrl', function ($scope, $ionicModal, $timeout, ngFB) {
+    $scope.fbLogin = function () {
+      ngFB.login({scope: 'email'}).then(
+        function (response) {
+          if (response.status === 'connected') {
+            ngFB.api({
+              path: '/me',
+              params: {fields: 'id,name,email,gender,link,middle_name,first_name,last_name,cover,picture'}
+            }).then(
+              function (user) {
+                $scope.user = user;
+              },
+              function (error) {
+                alert('Facebook error: ' + error.error_description);
+              });
+            ngFB.api({
+              path: '/me/picture',
+            params: {
+              type: 'normal'
+            }
+            }).then(
+              function (user) {
+                $scope.picture = user;
+              },
+              function (error) {
+                alert('Facebook error: ' + error.error_description);
+              });;
+            console.log('Facebook login succeeded');
+          } else {
+            alert('Facebook login failed');
+          }
+        });
+    };
+
   }).controller('LoginCtrl', ['$scope', '$location','AuthenticationService', function ($scope, $location,AuthenticationService) {
       $scope.user = {};
       $scope.login = function () {
@@ -124,12 +157,14 @@ angular.module('quickRide')
       }
   }]).controller('AccountActivationCtrl',['$scope','AccountService','AuthenticationService','$location',function($scope,AccountService,AuthenticationService,$location){
 
+    $scope.activationCode = "";
     $scope.activateAccount = function(){
       if(!AuthenticationService.getPhone()){
         $location('/auth/login')
       }
       AccountService.activateAccount(AuthenticationService.getPhone(),$scope.activationCode).success(function(data){
         console.log(data);
+        $location.path("/app/browse");
       }).error(function(error){
         console.log(error);
       });
