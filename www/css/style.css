@@ -1,5 +1,5 @@
 /* Empty. Add your own CSS if you like */
-/*@media (min-width: 767px) {
+@media (min-width: 767px) {
   drawer {
     -webkit-transform: translate3d(0%, 0, 0) !important;
 
@@ -56,7 +56,7 @@
 }
 
 .slider-pager-page {
-  margin: 0px 1px !important;
+  margin: 5px 1px !important;
   width: 7px !important;
   font-size: 96% !important;
 }
@@ -65,77 +65,15 @@
   font-size: 45% !important;
 }
 
-.button-bar {
-  padding: 20px;
-  text-align: center !important;
-}
-
-.button {
-  max-width: 300px;
-}
-
-.button-signup {
-  background-color: green;
-  text-decoration-color: white;
-  margin-left: auto;
-}
-
-.button-signup:active {
-  background-color: lightgreen;
-  color: white;
-}
-
-.button-signup:hover {
-  background-color: lightgreen;
-  color: white;
-}
-
-.button-login {
-  background-color: sandybrown;
-  color: white;
-  margin-right: auto;
-}
-
-.button-login:active {
-  background-color: brown;
-  color: white;
-}
-
-.button-login:hover {
-  background-color: brown;
-  color: white;
+.buttonBarStyle{
+  width: 70%;
+  margin: auto;
 }
 
 .guest {
   text-align: center;
 }
 
-input {
-  background-color: transparent !important;
-  border: 1px solid lightgrey !important;
-  height: 45px !important;
-  line-height: 40px !important;
-  font-size: 18px !important;
-  width: 100%;
-  margin-bottom: 10px;
-  padding-left: 10px !important;
-
-}
-
-.login {
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-  height: 600px;
-}
-
-.ion-iphone:before {
-  font-size: 16px;
-}
-
-.ion-key:before {
-  font-size: 16px;
-}
 
 .scroll {
   height: 100%;
@@ -145,7 +83,7 @@ input {
   color: white;
   text-align: center;
   padding-top: 10px;
-}*/
+}
 
 a {
   text-decoration: none;
