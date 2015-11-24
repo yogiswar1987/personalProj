@@ -55,9 +55,11 @@ angular.module('quickRide')
         return $http(urlOpts);
       },
       isSessionValid: function () {
-        var phone = localStorage.getItem("phone") || sessionStorage.setItem("phone", phone);
-        sessionStorage.setItem("phone", phone);
-        return phone ? true : false;
+        var phone = localStorage.getItem("phone") || sessionStorage.getItem("phone");
+        if (phone) {
+          sessionStorage.setItem("phone", phone);
+        }
+        return phone && phone != null ? true : false;
       },
       logout: function () {
         localStorage.removeItem("phone");
