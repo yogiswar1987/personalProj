@@ -21,17 +21,25 @@
           <input type="text" placeholder="Name" ng-model="signUpData.name">
         </label>
 
-        <ion-toggle ng-model="signUpData.gender" ng-checked="true">
-          Gender: {{ toggle1 }}
-        </ion-toggle>
-
-
+        <div class="row">
+          <li class="item item-checkbox checkbox-balanced">
+            <label class="checkbox">
+              <input type="checkbox" ng-checked="male" ng-change="female = false" ng-model="male">
+            </label>
+            Male
+          </li>
+          <li class="item item-checkbox checkbox-balanced">
+            <label class="checkbox">
+              <input type="checkbox" ng-checked="female" ng-change="male = false" ng-model="female">
+            </label>
+            Female
+          </li>
+        </div>
       </div>
-
-      <div ng-click="showPopup()"><a href="#">Have a promo code?</a></div>
-
-      <button class="button button-block button-balanced" ng-click="signUp()">Sign Up</button>
-
+      <div style="padding-left: 20px;padding-right: 20px"><a href="#"><button class="col button button-clear button-calm" style="text-align: left" ng-click="showPopup()">Have a promo code?</button></a></div>
+      <div style="padding-left: 10px;padding-right: 10px">
+        <button class="button button-block button-balanced" ng-click="signUp()">Sign Up</button>
+      </div>
       <span>By Sign Up, I agree to <a href="terms.html">Quick Ride Terms</a></span>
     </ion-content>
   </ion-view>
