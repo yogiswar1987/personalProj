@@ -135,4 +135,12 @@ a {
   padding-left: 10px;
   padding-right: 10px;
 }
+.item-checkbox{
+  border-width: 0px !important;
+  margin-top: 10px;
+}
+.ionic .checkbox input:checked:before,
+.ionic .checkbox input:checked + .checkbox-icon:before {
+  background: lightgreen;
+}
 

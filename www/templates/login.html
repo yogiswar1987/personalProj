@@ -1,7 +1,7 @@
 <form ua-login>
   <ion-view title="Login">
     <ion-content>
-      <div style="padding-top:20px;padding-bottom: 20px;text-align: center"><img src="/img/quickride.png" style="height:80px;"></div>
+      <div style="padding-top:15px;padding-bottom: 15px;text-align: center"><img src="/img/quickride.png" style="height:80px;"></div>
       <div class="list">
         <label class="item item-input item-floating-label">
           <span class="input-label icon ion-android-phone-portrait larger">Phone</span>
@@ -12,20 +12,21 @@
           <span class="input-label icon ion-key larger">Password</span>
           <input type="password" placeholder="Password" ng-model="user.pwd">
         </label>
-        <div class="item item-checkbox">
+        <li class="item item-checkbox checkbox-balanced">
           <label class="checkbox">
             <input type="checkbox" ng-model="user.rememberme">
           </label>
           Remember me
-        </div>
+        </li>
       </div>
 
-      <button class="button button-block button-energized" ng-click="login()">Login</button>
-
-      <div><a href="#/auth/forgotPassword">Forgot Password?</a></div>
-
-      <a href="#/auth/signUp"><button class="button button-block button-balanced">SignUp</button></a>
-
+      <div style="padding-left: 10px;padding-right: 10px">
+      <button class="col button button-block button-energized" ng-click="login()">Login</button>
+      </div>
+      <div style="padding-left: 20px;padding-right: 20px"><a href="#/auth/forgotPassword"><button class="col button button-clear button-dark" style="text-align: left">Forgot Password?</button></a></div>
+      <div style="padding-left: 10px;padding-right: 10px">
+      <a href="#/auth/signUp"><button class="col button button-block button-balanced">SignUp</button></a>
+      </div>
     </ion-content>
   </ion-view>
   <div class="bar bar-footer bar-assertive" ng-show="error">
