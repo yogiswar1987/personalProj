@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('quickRide', ['ionic', 'ionic.contrib.drawer', 'ngOpenFB'])
+angular.module('quickRide', ['ionic', 'ionic.contrib.drawer', 'ngOpenFB','ngMessages'])
 
   .run(function ($ionicPlatform, ngFB) {
     ngFB.init({appId: '1524191344558710'});

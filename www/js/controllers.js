@@ -124,18 +124,28 @@ angular.module('quickRide')
         });
     };
 
-  }).controller('LoginCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
+  }).controller('LoginCtrl', ['$scope', '$location', '$ionicPopup','AuthenticationService', function ($scope, $location,$ionicPopup, AuthenticationService) {
     $scope.user = {};
-    $scope.login = function () {
-      AuthenticationService.login($scope.user).success(function (data) {
-        console.log(data);
-        $location.path("/app/browse");
-      }).error(function (error) {
-        if (error.errorCode === 1007) {
-          $location.path('auth/accountActivation')
-        }
-        console.log(error);
-      });
+    $scope.login = function (loginForm) {
+      if (loginForm.$valid) {
+        AuthenticationService.login($scope.user).success(function (data) {
+          console.log(data);
+          $location.path("/app/browse");
+        }).error(function (error) {
+          if (error.errorCode === 1007) {
+            $location.path('auth/accountActivation')
+          }else{
+              var alertPopup = $ionicPopup.alert({
+                template: error.resultData.userMsg,
+                okType: 'button-balanced'
+              });
+              alertPopup.then(function(res) {
+
+              });
+          }
+          console.log(error);
+        });
+      }
     }
   }]).controller('AccountActivationCtrl', ['$scope', 'AccountService', 'AuthenticationService', '$location', function ($scope, AccountService, AuthenticationService, $location) {
 

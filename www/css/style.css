@@ -143,4 +143,20 @@ a {
 .ionic .checkbox input:checked + .checkbox-icon:before {
   background: lightgreen;
 }
-
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  display: none;
+}
+.icon-custom{
+  text-align: right;
+  right: 10px;
+  top: 38px;
+  position: absolute;
+  color: red;
+  z-index: 200;
+}
+.input-error{
+  top: -25px;
+  position: absolute;
+  right: 20px;
+}
