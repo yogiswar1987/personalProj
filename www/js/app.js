@@ -26,6 +26,7 @@ angular.module('quickRide', ['ionic', 'ionic.contrib.drawer', 'ngOpenFB'])
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     window.BASE_URL = "http://testrm.getquickride.com:8080/dishaapiserver/rest/";
     $ionicConfigProvider.views.transition("android");
+    $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
     $stateProvider
 
       //Authentication Pages

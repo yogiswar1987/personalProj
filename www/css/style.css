@@ -65,8 +65,8 @@
   font-size: 45% !important;
 }
 
-.buttonBarStyle{
-  width: 70%;
+.buttonBarStyle,.buttondiv{
+  width: 90%;
   margin: auto;
 }
 

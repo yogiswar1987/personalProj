@@ -5,7 +5,7 @@
       </ion-nav-back-button>
     </ion-nav-bar>
     <ion-content>
-      <div class="list">
+      <div class="list" style="margin-bottom: 0px !important;">
         <label class="item item-input item-floating-label">
           <span class="input-label icon ion-android-phone-portrait larger">Phone</span>
           <input type="text" placeholder="Phone" ng-model="signUpData.phone">
@@ -22,13 +22,13 @@
         </label>
 
         <div class="row">
-          <li class="item item-checkbox checkbox-balanced">
+          <li class="item item-checkbox checkbox-balanced col-50">
             <label class="checkbox">
               <input type="checkbox" ng-checked="male" ng-change="female = false" ng-model="male">
             </label>
             Male
           </li>
-          <li class="item item-checkbox checkbox-balanced">
+          <li class="item item-checkbox checkbox-balanced col-50">
             <label class="checkbox">
               <input type="checkbox" ng-checked="female" ng-change="male = false" ng-model="female">
             </label>
@@ -36,8 +36,8 @@
           </li>
         </div>
       </div>
-      <div style="padding-left: 20px;padding-right: 20px"><a href="#"><button class="col button button-clear button-calm" style="text-align: left" ng-click="showPopup()">Have a promo code?</button></a></div>
-      <div style="padding-left: 10px;padding-right: 10px">
+      <div class="buttondiv"><a href="#"><button class="col button button-clear button-calm" style="text-align: left" ng-click="showPopup()">Have a promo code?</button></a></div>
+      <div class="buttondiv">
         <button class="button button-block button-balanced" ng-click="signUp()">Sign Up</button>
       </div>
       <span>By Sign Up, I agree to <a href="terms.html">Quick Ride Terms</a></span>
