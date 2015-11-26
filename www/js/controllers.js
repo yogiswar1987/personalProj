@@ -67,13 +67,15 @@ angular.module('quickRide')
       });
     };
 
-    $scope.signUp = function () {
-      AuthenticationService.signUp($scope.signUpData).success(function (data) {
-        $location.path('auth/accountActivation');
-        console.log(data);
-      }).error(function (error) {
-        console.log(error);
-      });
+    $scope.signUp = function (signUpForm) {
+      if(signUpForm.$valid) {
+        AuthenticationService.signUp($scope.signUpData).success(function (data) {
+          $location.path('auth/accountActivation');
+          console.log(data);
+        }).error(function (error) {
+          console.log(error);
+        });
+      }
     }
   })
   .controller('PlaylistCtrl', function ($scope, $stateParams) {

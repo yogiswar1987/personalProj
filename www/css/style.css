@@ -156,8 +156,11 @@ input[type=number]::-webkit-outer-spin-button {
   top: -25px;
   position: absolute;
   right: 10px;
-  color: red;
   background-color: white;
+}
+.input-error p{
+  color: red;
+  font-size: 12px;
 }
 .text-landing{
   color: white;
