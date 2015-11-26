@@ -1,13 +1,14 @@
 angular.module('quickRide')
 
-  .controller('HomeCtrl', function ($rootScope, $scope, $ionicModal, $timeout, $location, AuthenticationService) {
-    $rootScope.showNavBar = false;
-    $scope.logout = function () {
-      AuthenticationService.logout();
-      $location.path('#/auth/landing');
-    };
+  .controller('HomeCtrl', ['$rootScope', '$scope', '$ionicModal', '$timeout', '$location', 'AuthenticationService',
+    function ($rootScope, $scope, $ionicModal, $timeout, $location, authenticationService) {
+      $rootScope.showNavBar = false;
+      $scope.logout = function () {
+        authenticationService.logout();
+        $location.path('#/auth/landing');
+      };
 
-  })
+    }])
   .controller('PlaylistsCtrl', function ($scope) {
     $scope.playlists = [
       {title: 'Reggae', id: 1},
@@ -124,7 +125,7 @@ angular.module('quickRide')
         });
     };
 
-  }).controller('LoginCtrl', ['$scope', '$location', '$ionicPopup','AuthenticationService', function ($scope, $location,$ionicPopup, AuthenticationService) {
+  }).controller('LoginCtrl', ['$scope', '$location', '$ionicPopup', 'AuthenticationService', function ($scope, $location, $ionicPopup, AuthenticationService) {
     $scope.user = {};
     $scope.login = function (loginForm) {
       if (loginForm.$valid) {
@@ -134,42 +135,56 @@ angular.module('quickRide')
         }).error(function (error) {
           if (error.errorCode === 1007) {
             $location.path('auth/accountActivation')
-          }else{
-              var alertPopup = $ionicPopup.alert({
-                template: error.resultData.userMsg,
-                okType: 'button-balanced'
-              });
-              alertPopup.then(function(res) {
+          } else {
+            var alertPopup = $ionicPopup.alert({
+              template: error.resultData.userMsg,
+              okType: 'button-balanced'
+            });
+            alertPopup.then(function (res) {
 
-              });
+            });
           }
           console.log(error);
         });
       }
     }
-  }]).controller('AccountActivationCtrl', ['$scope', 'AccountService', 'AuthenticationService', '$location', function ($scope, AccountService, AuthenticationService, $location) {
-
-    $scope.activationData = {};
-    $scope.activateAccount = function () {
-      if (!AuthenticationService.getPhone()) {
-        $location.path('/auth/login');
+  }]).controller('AccountActivationCtrl', ['$scope', 'AccountService', 'AuthenticationService', '$location', function ($scope, accountService, authenticationService, $location) {
+    if (!authenticationService.getPhone()) {
+      $location.path('/auth/login');
+    } else {
+      $scope.activationData = {};
+      $scope.activateAccount = function (accountActivationForm) {
+        if (accountActivationForm.$valid) {
+          accountService.activateAccount(authenticationService.getPhone(), $scope.activationData.activationCode).success(function (data) {
+            console.log(data);
+            $location.path("/app/browse");
+          }).error(function (error) {
+            console.log(error);
+          });
+        }
       }
-      AccountService.activateAccount(AuthenticationService.getPhone(), $scope.activationData.activationCode).success(function (data) {
-        console.log(data);
-        $location.path("/app/browse");
-      }).error(function (error) {
-        console.log(error);
-      });
+      $scope.resendActivationCode = function () {
+        if (!authenticationService.getPhone()) {
+          $location.path('/auth/login');
+        }
+        accountService.resendActivationCode(authenticationService.getPhone()).success(function (data) {
+          console.log(data);
+        }).error(function (error) {
+          console.log(error);
+        });
+      }
     }
   }]).controller('ForgotPasswordCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
     $scope.user = {};
-    $scope.resetPassword = function () {
-      AuthenticationService.resetPassword($scope.user).success(function (data) {
-        console.log(data);
-        $location.path("/auth/login");
-      }).error(function (error) {
-        console.log(error);
-      });
+    $scope.resetPassword = function (forgotPasswordForm) {
+      if (forgotPasswordForm.$valid) {
+        AuthenticationService.resetPassword($scope.user).success(function (data) {
+          console.log(data);
+          $location.path("/auth/login");
+        }).error(function (error) {
+          console.log(error);
+        });
+      }
     };
   }]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
     $scope.user = {};

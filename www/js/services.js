@@ -39,7 +39,7 @@ angular.module('quickRide')
           url: BASE_URL + 'QRUser/login?userId=' + user.phone + '&pwd=' + user.pwd
         };
         return $http(urlOpts).success(function (data) {
-          if(user.rememberme) {
+          if (user.rememberme) {
             localStorage.setItem("phone", user.phone);
           }
           sessionStorage.setItem("phone", user.phone);
@@ -78,11 +78,34 @@ angular.module('quickRide')
       },
       changePassword: function (phone, oldPassword, newPassword) {
         var urlOpts = {
-          method: 'GET',
-          url: BASE_URL + 'QRUser/password?phone=' + phone + '&old_pwd=' + oldPassword + '&new_pwd=' + newPassword
+          method: 'PUT',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          url: BASE_URL + 'QRUser/password',
+          transformRequest: function (obj) {
+            var str = [];
+            for (var p in obj)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+          },
+          data: {phone: phone, old_pwd: oldPassword, new_pwd: newPassword}
         };
         return $http(urlOpts);
 
+      },
+      resendActivationCode: function (phone) {
+        var urlOpts = {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          url: BASE_URL + 'QRUser/activationCode',
+          transformRequest: function (obj) {
+            var str = [];
+            for (var p in obj)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+          },
+          data: {phone:phone}
+        };
+        return $http(urlOpts);
       }
     }
   }]);
