@@ -68,7 +68,7 @@ angular.module('quickRide')
     };
 
     $scope.signUp = function (signUpForm) {
-      if(signUpForm.$valid) {
+      if (signUpForm.$valid) {
         AuthenticationService.signUp($scope.signUpData).success(function (data) {
           $location.path('auth/accountActivation');
           console.log(data);
@@ -190,13 +190,34 @@ angular.module('quickRide')
     };
   }]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
     $scope.user = {};
-    $scope.resetPassword = function () {
-      AuthenticationService.changePassword(AuthenticationService.getPhone(), $scope.user, newPassword, $scope.user, oldPassword).success(function (data) {
-        console.log(data);
-        $location.path("/auth/login");
-      }).error(function (error) {
-        console.log(error);
-      });
+    $scope.chnagePassword = function (changePasswordForm) {
+      if (changePasswordForm.$valid) {
+        AuthenticationService.changePassword(AuthenticationService.getPhone(), $scope.user.old_pwd,$scope.user.new_pwd).success(function (data) {
+          console.log(data);
+          $location.path("/auth/login");
+        }).error(function (error) {
+          console.log(error);
+        });
+      }
     };
-  }]);
+  }]).directive('confirmPwd', function($interpolate, $parse) {
+    return {
+      require: 'ngModel',
+      link: function(scope, elem, attr, ngModelCtrl) {
+
+        var pwdToMatch = $parse(attr.confirmPwd);
+        var pwdFn = $interpolate(attr.confirmPwd)(scope);
+
+        scope.$watch(pwdFn, function(newVal) {
+          ngModelCtrl.$setValidity('password', ngModelCtrl.$viewValue == newVal);
+        })
+
+        ngModelCtrl.$validators.password = function(modelValue, viewValue) {
+          var value = modelValue || viewValue;
+          return value == pwdToMatch(scope).$modelValue;
+        };
+
+      }
+    }
+  });;
 
