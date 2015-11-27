@@ -173,3 +173,7 @@ input[type=number]::-webkit-outer-spin-button {
 .popup input{
   border: 1px solid #dddddd;
 }
+.title-left{
+  left: 20px !important;
+  font-size: 14px !important;
+}

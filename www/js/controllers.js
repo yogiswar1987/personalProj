@@ -176,11 +176,11 @@ angular.module('quickRide')
         });
       }
     }
-  }]).controller('ForgotPasswordCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
+  }]).controller('ForgotPasswordCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, authenticationService) {
     $scope.user = {};
     $scope.resetPassword = function (forgotPasswordForm) {
       if (forgotPasswordForm.$valid) {
-        AuthenticationService.resetPassword($scope.user).success(function (data) {
+        authenticationService.resetPassword($scope.user).success(function (data) {
           console.log(data);
           $location.path("/auth/login");
         }).error(function (error) {
@@ -188,11 +188,11 @@ angular.module('quickRide')
         });
       }
     };
-  }]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
+  }]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AccountService','AuthenticationService', function ($scope, $location, accountService,authenticationService) {
     $scope.user = {};
-    $scope.chnagePassword = function (changePasswordForm) {
+    $scope.changePassword = function (changePasswordForm) {
       if (changePasswordForm.$valid) {
-        AuthenticationService.changePassword(AuthenticationService.getPhone(), $scope.user.old_pwd,$scope.user.new_pwd).success(function (data) {
+        accountService.changePassword(authenticationService.getPhone(), $scope.user.old_pwd,$scope.user.new_pwd).success(function (data) {
           console.log(data);
           $location.path("/auth/login");
         }).error(function (error) {
