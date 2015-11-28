@@ -1,14 +1,5 @@
-/* Empty. Add your own CSS if you like */
-@media (min-width: 767px) {
-  drawer {
-    -webkit-transform: translate3d(0%, 0, 0) !important;
-  }
-  .bar-header button.ion-navicon {
-    display: none;
-  }
-  .menu-content {
-    left: 270px !important;
-  }
+.aside-open [menu-toggle] {
+  display: none;
 }
 
 .landing {
