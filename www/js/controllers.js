@@ -23,6 +23,7 @@ angular.module('quickRide')
   .controller('SignUpCtrl', function ($rootScope, $scope, $ionicPopup, AuthenticationService, $location) {
 
     $rootScope.showNavBar = true;
+    $scope.male = true;
     $scope.signUpData = {};
     // Triggered on a button click, or some other target
     $scope.showPopup = function () {
@@ -176,14 +177,29 @@ angular.module('quickRide')
         });
       }
     }
-  }]).controller('ForgotPasswordCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, authenticationService) {
+  }]).controller('ForgotPasswordCtrl', ['$scope', '$location', 'AuthenticationService','$ionicPopup', function ($scope, $location, authenticationService,$ionicPopup) {
     $scope.user = {};
     $scope.resetPassword = function (forgotPasswordForm) {
       if (forgotPasswordForm.$valid) {
         authenticationService.resetPassword($scope.user).success(function (data) {
           console.log(data);
-          $location.path("/auth/login");
+          var alertPopup = $ionicPopup.alert({
+            template: "New password for Quickride has sent to your registered mobile number",
+            okType: 'button-balanced'
+          });
+          alertPopup.then(function (res) {
+            $location.path("/auth/login");
+          });
+
         }).error(function (error) {
+          var alertPopup = $ionicPopup.alert({
+            template: error.resultData.userMsg,
+            okType: 'button-balanced'
+          });
+          alertPopup.then(function (res) {
+
+          });
+
           console.log(error);
         });
       }
