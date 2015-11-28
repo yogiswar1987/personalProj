@@ -87,7 +87,7 @@ angular.module('quickRide')
               str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             return str.join("&");
           },
-          data: {phone: phone, old_pwd: oldPassword, new_pwd: newPassword}
+          data: {phone: phone, oldPassword: oldPassword, newPassword: newPassword}
         };
         return $http(urlOpts);
 

@@ -44,14 +44,24 @@ angular.module('quickRide')
               } else {
                 AuthenticationService.checkReferralCode($scope.signUpData.promoode).success(function (data) {
                   var alertPopup = $ionicPopup.alert({
-                    template: data
+                    template: data,
+                    buttons: [
+                      {
+                        text: '<b>Ok</b>',
+                        type: 'button-balanced'
+                      }]
                   });
                   alertPopup.then(function (res) {
                     console.log('promo code alert closed');
                   });
                 }).error(function (error) {
                   var alertPopup = $ionicPopup.alert({
-                    template: error.resultData.userMsg
+                    template: error.resultData.userMsg,
+                    buttons: [
+                      {
+                        text: '<b>Ok</b>',
+                        type: 'button-balanced'
+                      }]
                   });
                   alertPopup.then(function (res) {
                     console.log(error);
@@ -177,7 +187,7 @@ angular.module('quickRide')
         });
       }
     }
-  }]).controller('ForgotPasswordCtrl', ['$scope', '$location', 'AuthenticationService','$ionicPopup', function ($scope, $location, authenticationService,$ionicPopup) {
+  }]).controller('ForgotPasswordCtrl', ['$scope', '$location', 'AuthenticationService', '$ionicPopup', function ($scope, $location, authenticationService, $ionicPopup) {
     $scope.user = {};
     $scope.resetPassword = function (forgotPasswordForm) {
       if (forgotPasswordForm.$valid) {
@@ -204,36 +214,38 @@ angular.module('quickRide')
         });
       }
     };
-  }]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AccountService','AuthenticationService', function ($scope, $location, accountService,authenticationService) {
+  }]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AccountService', 'AuthenticationService', function ($scope, $location, accountService, authenticationService) {
     $scope.user = {};
     $scope.changePassword = function (changePasswordForm) {
       if (changePasswordForm.$valid) {
-        accountService.changePassword(authenticationService.getPhone(), $scope.user.old_pwd,$scope.user.new_pwd).success(function (data) {
+        accountService.changePassword(authenticationService.getPhone(), $scope.user.old_pwd, $scope.user.new_pwd).success(function (data) {
           console.log(data);
-          $location.path("/auth/login");
+          $scope.user.old_pwd = '';
+          $scope.user.new_pwd = '';
         }).error(function (error) {
           console.log(error);
         });
       }
     };
-  }]).directive('confirmPwd', function($interpolate, $parse) {
+  }]).directive('confirmPwd', function ($interpolate, $parse) {
     return {
       require: 'ngModel',
-      link: function(scope, elem, attr, ngModelCtrl) {
+      link: function (scope, elem, attr, ngModelCtrl) {
 
         var pwdToMatch = $parse(attr.confirmPwd);
         var pwdFn = $interpolate(attr.confirmPwd)(scope);
 
-        scope.$watch(pwdFn, function(newVal) {
+        scope.$watch(pwdFn, function (newVal) {
           ngModelCtrl.$setValidity('password', ngModelCtrl.$viewValue == newVal);
         })
 
-        ngModelCtrl.$validators.password = function(modelValue, viewValue) {
+        ngModelCtrl.$validators.password = function (modelValue, viewValue) {
           var value = modelValue || viewValue;
           return value == pwdToMatch(scope).$modelValue;
         };
 
       }
     }
-  });;
+  });
+;
 
