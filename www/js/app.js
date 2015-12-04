@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('quickRide', ['ionic', 'ionic.contrib.drawer', 'ngOpenFB','ngMessages'])
+angular.module('quickRide', ['ionic','ionMdInput','ionic-material', 'ngOpenFB','ngMessages'])
 
   .run(function ($ionicPlatform, ngFB) {
     ngFB.init({appId: '1524191344558710'});
@@ -24,6 +24,8 @@ angular.module('quickRide', ['ionic', 'ionic.contrib.drawer', 'ngOpenFB','ngMess
   })
 
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
+    $ionicConfigProvider.views.maxCache(0);
     window.BASE_URL = "http://testrm.getquickride.com:8080/dishaapiserver/rest/";
     $ionicConfigProvider.views.transition("android");
     $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');

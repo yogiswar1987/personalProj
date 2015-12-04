@@ -90,7 +90,9 @@ angular.module('quickRide')
     }
   })
   .controller('PlaylistCtrl', function ($scope, $stateParams) {
-  }).controller('LandingCtrl', function ($scope, $ionicModal, $timeout, ngFB, AuthenticationService, $location, $rootScope) {
+  }).controller('LandingCtrl', function ($scope, $ionicModal, $timeout, ngFB, AuthenticationService, $location, $rootScope,ionicMaterialInk,ionicMaterialMotion) {
+    ionicMaterialInk.displayEffect() ;
+    ionicMaterialMotion.ripple();
     if (AuthenticationService.isSessionValid()) {
       $location.url('app/browse');
     }
