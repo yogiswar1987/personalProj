@@ -140,7 +140,10 @@ angular.module('quickRide')
         });
     };
 
-  }).controller('LoginCtrl', ['$scope', '$location', '$ionicPopup', 'AuthenticationService', function ($scope, $location, $ionicPopup, AuthenticationService) {
+  }).controller('LoginCtrl', ['$scope', '$location', '$ionicPopup', 'AuthenticationService','ionicMaterialInk','ionicMaterialMotion', function ($scope, $location, $ionicPopup, AuthenticationService,ionicMaterialInk,ionicMaterialMotion) {
+    ionicMaterialInk.displayEffect() ;
+    ionicMaterialMotion.ripple();
+
     $scope.user = {};
     $scope.login = function (loginForm) {
       if (loginForm.$valid) {
