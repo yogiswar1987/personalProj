@@ -22,12 +22,12 @@
   -ms-transform-origin: 0;
   transform-origin: 0; }
 
-.item-md-label {
-  background-color: rgba(0, 0, 0, 0.6);
+.item-md-label input{
+  /*background-color: rgba(0, 0, 0, 0.6);*/
   bottom: 0;
-  color: #fff;
+  /*color: #fff;*/
   letter-spacing: 0.25rem;
-  padding: 20px 0px 0px 0px;
+  padding: 20px 10px;
   position: relative;
   z-index: 1; }
 
