@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('quickRide', ['ionic','ionMdInput','ionic-material', 'ngOpenFB','ngMessages'])
+angular.module('quickRide', ['ionic','ionMdInput','ionic-material', 'ngOpenFB','ngMessages','uiGmapgoogle-maps'])
 
   .run(function ($ionicPlatform, ngFB) {
     ngFB.init({appId: '1524191344558710'});
@@ -25,7 +25,7 @@ angular.module('quickRide', ['ionic','ionMdInput','ionic-material', 'ngOpenFB','
 
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
-    $ionicConfigProvider.views.maxCache(0);
+
     window.BASE_URL = "http://testrm.getquickride.com:8080/dishaapiserver/rest/";
     $ionicConfigProvider.views.transition("android");
     $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
@@ -101,6 +101,42 @@ angular.module('quickRide', ['ionic','ionMdInput','ionic-material', 'ngOpenFB','
           'menuContent': {
             templateUrl: 'templates/changePassword.html',
             controller: 'ChangePasswordCtrl'
+          }
+        }
+      })
+      .state('app.newRide', {
+        url: '/newRide',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/newRide.html',
+            controller: 'NewRideCtrl'
+          }
+        }
+      })
+      .state('app.ride', {
+        url: '/ride',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/ride.html',
+            controller: 'RideCtrl'
+          }
+        }
+      })
+      .state('app.ride.offerRide', {
+        url: '/offerRide',
+        views: {
+          'rides': {
+            templateUrl: 'templates/offerRide.html',
+            controller: 'OfferRideCtrl'
+          }
+        }
+      })
+      .state('app.ride.findRide', {
+        url: '/findRide',
+        views: {
+          'rides': {
+            templateUrl: 'templates/findRide.html',
+            controller: 'FindRideCtrl'
           }
         }
       })
